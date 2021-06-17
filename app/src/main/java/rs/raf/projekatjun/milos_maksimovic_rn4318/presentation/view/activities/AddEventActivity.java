@@ -20,8 +20,12 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TimePicker;
 
+import java.util.Date;
+
 import rs.raf.projekatjun.milos_maksimovic_rn4318.R;
+import rs.raf.projekatjun.milos_maksimovic_rn4318.data.datasources.local.MyRoomDatabase;
 import rs.raf.projekatjun.milos_maksimovic_rn4318.data.models.api.EasternStandardTimeModel;
+import rs.raf.projekatjun.milos_maksimovic_rn4318.data.models.db.Event;
 import rs.raf.projekatjun.milos_maksimovic_rn4318.presentation.view.fragments.DatePickerFragment;
 import rs.raf.projekatjun.milos_maksimovic_rn4318.presentation.view.fragments.TimePickerFragment;
 import rs.raf.projekatjun.milos_maksimovic_rn4318.presentation.viewmodel.WorldClockViewModel;
@@ -42,6 +46,8 @@ public class AddEventActivity extends AppCompatActivity implements TimePickerDia
 
     private WorldClockViewModel myViewModel;
 
+    private String priority;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +64,43 @@ public class AddEventActivity extends AppCompatActivity implements TimePickerDia
         initView();
         initListeners();
         initObserver();
+        roomDatabase();
+    }
+
+    private void roomDatabase() {
+        final MyRoomDatabase myRoomDatabase = MyRoomDatabase.getDatabase(this);
+
+        btnSaveEvent.setOnClickListener(v -> {
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    Event event =
+                            new Event(
+                                    etName.getText().toString(),
+                                    etDesc.getText().toString(),
+                                    btnSetDate.getText().toString(),
+                                    btnSetTime.getText().toString(),
+                                    etUrl.getText().toString(),
+                                    priority
+                            );
+                    long eventId = myRoomDatabase.eventDao().insert(event);
+                }
+            }).start();
+
+            clearInput();
+        });
+
+    }
+
+    private void clearInput() {
+        etName.setText("");
+        etDesc.setText("");
+        btnCheckTime.setText("Check time for location");
+        btnSetDate.setText("Set date");
+        btnSetTime.setText("Set time");
+        etUrl.setText("");
+        autoCompleteTextView.setText("");
+        spinnerPriority.setSelection(0);
     }
 
     private void initObserver() {
@@ -98,7 +141,7 @@ public class AddEventActivity extends AppCompatActivity implements TimePickerDia
 
             @Override
             public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-
+                priority = arg0.getItemAtPosition(arg2).toString();
             }
 
             @Override
