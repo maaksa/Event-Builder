@@ -61,7 +61,6 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:background=""
         android:layout_margin="16dp"
         android:id="@+id/ivSendRvItem"
         android:layout_width="30dp"

@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="rs.raf.projekatjun.milos_maksimovic_rn4318">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,11 +11,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.EventBuilder">
-        <activity android:name=".ShowEventsActivity"></activity>
+        <activity android:name=".presentation.view.activities.ShowEventsActivity"></activity>
         <activity
-            android:name=".AddEventActivity"
-            android:parentActivityName=".MainActivity"></activity>
-        <activity android:name=".MainActivity">
+            android:name=".presentation.view.activities.AddEventActivity"
+            android:parentActivityName=".presentation.view.activities.MainActivity"></activity>
+        <activity android:name=".presentation.view.activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

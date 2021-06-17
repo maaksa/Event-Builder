@@ -1,8 +1,10 @@
-package rs.raf.projekatjun.milos_maksimovic_rn4318;
+package rs.raf.projekatjun.milos_maksimovic_rn4318.presentation.view.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import rs.raf.projekatjun.milos_maksimovic_rn4318.R;
 
 public class ShowEventsActivity extends AppCompatActivity {
 

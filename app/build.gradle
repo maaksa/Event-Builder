@@ -78,4 +78,7 @@ dependencies {
     testImplementation "androidx.room:room-testing:$room_version"
 
     implementation 'org.jetbrains:annotations:15.0'
+
+    implementation "androidx.lifecycle:lifecycle-extensions:2.1.0"
+
 }
