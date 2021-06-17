@@ -83,12 +83,13 @@ public class AddEventActivity extends AppCompatActivity implements TimePickerDia
                                     etUrl.getText().toString(),
                                     priority
                             );
-                    long eventId = myRoomDatabase.eventDao().insert(event);
+                   long eventId = myRoomDatabase.eventDao().insert(event);
                 }
             }).start();
-
-            clearInput();
+            Intent intent = new Intent(this, ShowEventsActivity.class);
+            startActivity(intent);
         });
+
 
     }
 
