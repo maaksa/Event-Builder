@@ -10,6 +10,8 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -75,8 +77,36 @@ public class AddEventActivity extends AppCompatActivity implements TimePickerDia
 
     private void initView() {
         setCitiesValue();
+        setSpinnerValue();
         initEt();
         initBtn();
+    }
+
+    private void setSpinnerValue() {
+        spinnerPriority = findViewById(R.id.spinnerPriority);
+
+        ArrayAdapter<CharSequence> spinnerAdapter = ArrayAdapter.createFromResource(this, R.array.priority_array, android.R.layout.simple_spinner_item);
+        spinnerPriority.setAdapter(spinnerAdapter);
+
+        setSpinnerListener();
+
+    }
+
+    private void setSpinnerListener() {
+
+        spinnerPriority.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+            @Override
+            public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> arg0) {
+
+            }
+
+        });
     }
 
     private void initListeners() {
