@@ -19,6 +19,9 @@ public interface EventDao {
     @Query("SELECT * FROM event_table")
     public LiveData<List<Event>> getAll();
 
+    @Query("DELETE FROM event_table WHERE name = :name")
+    public void deleteByName(String name);
+
     @Delete
     void delete(Event... events);
 
