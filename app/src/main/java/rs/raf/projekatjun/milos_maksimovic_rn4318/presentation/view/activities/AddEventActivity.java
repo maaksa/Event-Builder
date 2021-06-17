@@ -1,22 +1,30 @@
 package rs.raf.projekatjun.milos_maksimovic_rn4318.presentation.view.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TimePicker;
 
 import rs.raf.projekatjun.milos_maksimovic_rn4318.R;
 import rs.raf.projekatjun.milos_maksimovic_rn4318.data.models.api.EasternStandardTimeModel;
+import rs.raf.projekatjun.milos_maksimovic_rn4318.presentation.view.fragments.DatePickerFragment;
+import rs.raf.projekatjun.milos_maksimovic_rn4318.presentation.view.fragments.TimePickerFragment;
 import rs.raf.projekatjun.milos_maksimovic_rn4318.presentation.viewmodel.WorldClockViewModel;
 
-public class AddEventActivity extends AppCompatActivity {
+public class AddEventActivity extends AppCompatActivity implements TimePickerDialog.OnTimeSetListener, DatePickerDialog.OnDateSetListener {
 
     public static final String REGION = "Europe";
 
@@ -75,6 +83,18 @@ public class AddEventActivity extends AppCompatActivity {
         btnCheckTime.setOnClickListener(v -> {
             myViewModel.invokeCityService(REGION, autoCompleteTextView.getText().toString());
         });
+
+        btnSetTime.setOnClickListener(v -> {
+            DialogFragment dialog = new TimePickerFragment();
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            dialog.show(fragmentManager, "TimePicker app");
+        });
+
+        btnSetDate.setOnClickListener(v -> {
+            DialogFragment dialog = new DatePickerFragment();
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            dialog.show(fragmentManager, "DatePicker app");
+        });
     }
 
     private void initBtn() {
@@ -98,5 +118,25 @@ public class AddEventActivity extends AppCompatActivity {
         ArrayAdapter<String> arrayAdapter =
                 new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, cities);
         autoCompleteTextView.setAdapter(arrayAdapter);
+    }
+
+    @Override
+    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+        String min = "";
+        if (minute < 10) {
+            min = "0" + minute;
+        } else if (minute == 0) {
+            min = "00";
+        } else {
+            min = "" + minute;
+        }
+        btnSetTime.setText("Time: " + hourOfDay + ":" + min);
+    }
+
+    @Override
+    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+        int monthToDisplay = month + 1;
+        btnSetDate.setText("Date: " + dayOfMonth + "." + monthToDisplay + "." + year + ".");
+
     }
 }
